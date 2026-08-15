@@ -3,15 +3,15 @@ import shutil
 import zipfile
 from pathlib import Path
 from typing import Dict
-from asset_packer.core.base_compiler import BaseAssetCompiler
-from asset_packer.compilers.json_compiler import JsonAssetCompiler
-from asset_packer.compilers.copy_compiler import CopyAssetCompiler
+from resource_packer.core.base_compiler import BaseResourceCompiler
+from resource_packer.compilers.json_compiler import JsonResourceCompiler
+from resource_packer.compilers.copy_compiler import CopyResourceCompiler
 
-class AssetPipeline:
+class ResourcePipeline:
     def __init__(self):
-        self._fallback_compiler = CopyAssetCompiler()
-        self._compilers: Dict[str, BaseAssetCompiler] = {
-            ".json": JsonAssetCompiler(),
+        self._fallback_compiler = CopyResourceCompiler()
+        self._compilers: Dict[str, BaseResourceCompiler] = {
+            ".json": JsonResourceCompiler(),
         }
 
     def process_file(self, src_file: Path, input_root: Path, temp_staging_root: Path) -> Path:
@@ -25,7 +25,7 @@ class AssetPipeline:
 
     def process_directory(self, input_root: Path, output_pack_file: Path) -> None:
         if not input_root.exists():
-            print(f"[ASSET PACKER ERROR] Source directory does not exist: '{input_root}'", file=sys.stderr)
+            print(f"[Resource PACKER ERROR] Source directory does not exist: '{input_root}'", file=sys.stderr)
             sys.exit(1)
 
         temp_staging_dir = output_pack_file.parent / f".tmp_{output_pack_file.stem}"
@@ -47,7 +47,7 @@ class AssetPipeline:
 
         if error_count > 0:
             shutil.rmtree(temp_staging_dir, ignore_errors=True)
-            print(f"\n[ASSET PACKER BUILD FAILED] {error_count} file(s) failed to compile.", file=sys.stderr)
+            print(f"\n[Resource PACKER BUILD FAILED] {error_count} file(s) failed to compile.", file=sys.stderr)
             sys.exit(1)
 
         output_pack_file.parent.mkdir(parents=True, exist_ok=True)
@@ -63,4 +63,4 @@ class AssetPipeline:
 
         shutil.rmtree(temp_staging_dir, ignore_errors=True)
 
-        print(f"[ASSET PACKER SUCCESS] Successfully packed {success_count} asset(s) into '{final_pack_path.name}'.")
+        print(f"[Resource PACKER SUCCESS] Successfully packed {success_count} Resource(s) into '{final_pack_path.name}'.")

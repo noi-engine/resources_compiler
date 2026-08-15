@@ -1,0 +1,3 @@
+/home/ricka/Ricka/Projects/noi-engine-org/resources_packer/build/CMakeFiles/pack_resources__home_ricka_Ricka_Projects_noi_engine_org_resources_packer_tests.dir
+/home/ricka/Ricka/Projects/noi-engine-org/resources_packer/build/CMakeFiles/edit_cache.dir
+/home/ricka/Ricka/Projects/noi-engine-org/resources_packer/build/CMakeFiles/rebuild_cache.dir
