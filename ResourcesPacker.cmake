@@ -3,7 +3,7 @@
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
 set(RESOURCES_PACKER_DIR "${CMAKE_CURRENT_LIST_DIR}")
-set(RESOURCES_PACKER_VENV "${CMAKE_BINARY_DIR}/.venv_resource_packer")
+set(RESOURCES_PACKER_VENV "${CMAKE_BINARY_DIR}/.venv_resources_packer")
 
 if(WIN32)
     set(RESOURCES_PACKER_PYTHON "${RESOURCES_PACKER_VENV}/Scripts/python.exe")
@@ -11,7 +11,7 @@ else()
     set(RESOURCES_PACKER_PYTHON "${RESOURCES_PACKER_VENV}/bin/python")
 endif()
 
-function(_setup_resource_packer_env)
+function(_setup_resources_packer_env)
     if(NOT EXISTS "${RESOURCES_PACKER_PYTHON}")
         message(STATUS "[Resource Packer] Creating virtual environment: ${RESOURCES_PACKER_VENV}")
         execute_process(
@@ -40,7 +40,7 @@ function(_setup_resource_packer_env)
     endif()
 endfunction()
 
-_setup_resource_packer_env()
+_setup_resources_packer_env()
 
 function(compile_resources INPUT_FOLDER OUTPUT_PACK_FILE)
     if(ARGV2)

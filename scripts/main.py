@@ -6,7 +6,7 @@ from pathlib import Path
 # Add script directory to Python path
 sys.path.insert(0, str(Path(__file__).parent))
 
-from resource_packer.core.pipeline import ResourcePipeline
+from resources_packer.core.pipeline import ResourcePipeline
 
 def main():
     parser = argparse.ArgumentParser(description="noi_engine Resource Packer Pipeline")

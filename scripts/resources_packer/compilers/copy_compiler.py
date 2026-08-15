@@ -1,6 +1,6 @@
 import shutil
 from pathlib import Path
-from resource_packer.core.base_compiler import BaseResourceCompiler
+from resources_packer.core.base_compiler import BaseResourceCompiler
 
 class CopyResourceCompiler(BaseResourceCompiler):
     """Fallback compiler that copies raw Resource files without modification."""

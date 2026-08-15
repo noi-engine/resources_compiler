@@ -3,9 +3,9 @@ import shutil
 import zipfile
 from pathlib import Path
 from typing import Dict
-from resource_packer.core.base_compiler import BaseResourceCompiler
-from resource_packer.compilers.json_compiler import JsonResourceCompiler
-from resource_packer.compilers.copy_compiler import CopyResourceCompiler
+from resources_packer.core.base_compiler import BaseResourceCompiler
+from resources_packer.compilers.json_compiler import JsonResourceCompiler
+from resources_packer.compilers.copy_compiler import CopyResourceCompiler
 
 class ResourcePipeline:
     def __init__(self):

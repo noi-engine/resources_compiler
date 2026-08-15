@@ -2,7 +2,7 @@ import json
 import sys
 import msgpack
 from pathlib import Path
-from resource_packer.core.base_compiler import BaseResourceCompiler
+from resources_packer.core.base_compiler import BaseResourceCompiler
 
 class JsonResourceCompiler(BaseResourceCompiler):
     """Compiles JSON text files into binary MessagePack (.msgpack)."""
