@@ -4,3 +4,5 @@ CMakeLists.txt
 .idea
 .vscode
 build
+sandbox
+__pycache__/
