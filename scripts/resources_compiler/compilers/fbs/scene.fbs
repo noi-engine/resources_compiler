@@ -1,0 +1,90 @@
+namespace noi_engine.fbs;
+
+// Utils
+table NameValueFloat{
+    name: string;
+    value: float;
+}
+
+table NameValue{
+    name: string;
+    value: string;
+}
+
+table NamePath{
+    name: string;
+    path: string;
+}
+
+// Components
+table RenderLayerComponent{
+    order: int;
+}
+
+table MeshRendererComponent{
+    mesh: string;
+    material: string;
+}
+
+table ScriptsComponent{
+    names: [string];
+}
+
+table Camera2DComponent{
+    zoom: float;
+    far_plane: float;
+    near_plane: float;
+    orthographic_size: float;
+    aspect_ratio_width: float;
+    aspect_ratio_height: float;
+}
+
+table TransformComponent{
+    scale: [float];
+    position: [float];
+    rotation: [float];
+}
+
+union ComponentUnion {
+    RenderLayerComponent,
+    MeshRendererComponent,
+    ScriptsComponent,
+    Camera2DComponent,
+    TransformComponent
+}
+
+table Component {
+    type: string;
+    properties: ComponentUnion;
+}
+
+// Resources
+table Material {
+    name: string;
+    shader: string;
+    colors: [NameValue];
+    textures: [NameValue];
+    parameters: [NameValueFloat];
+}
+
+table Resources{
+    scripts: [string];
+    meshes: [NamePath];
+    shaders: [NamePath];
+    textures: [NamePath];
+    materials: [Material];
+}
+
+// Entity
+table Entity {
+    name: string;
+    components: [Component];
+}
+
+table Scene{
+    name: string;
+    resources: Resources;
+    entities: [Entity];
+}
+
+root_type Scene;
