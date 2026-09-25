@@ -51,18 +51,29 @@ class SceneResourceCompiler(BaseResourceCompiler):
 
     def _preprocess_components(self, scene: dict) -> None:
         for entity in scene.get("entities", []):
-            for component in entity.get("components", []):
-                if "properties" not in component:
-                    continue
+            entity["components"] = [
+                self._add_properties_type(component)
+                for component in entity.get("components", [])
+            ]
 
-                component_type = component.get("type")
+    def _add_properties_type(self, component: dict) -> dict:
+        if "properties" not in component:
+            return component
 
-                if component_type not in self._component_types:
-                    raise ValueError(
-                        f"Unknown component type: '{component_type}'"
-                    )
+        component_type = component.get("type")
 
-                component["properties_type"] = (
-                    self._component_types[component_type]
-                )
+        if component_type not in self._component_types:
+            raise ValueError(f"Unknown component type: '{component_type}'")
+
+        # flatc's JSON parser resolves a union's value using its "<field>_type"
+        # sibling, and only if that sibling has already been seen by the time
+        # it reaches the value - so properties_type must be inserted right
+        # before properties, regardless of the source JSON's own key order
+        # (e.g. editor-saved scenes serialize properties before type).
+        result = {}
+        for key, value in component.items():
+            if key == "properties":
+                result["properties_type"] = self._component_types[component_type]
+            result[key] = value
+        return result
                 
