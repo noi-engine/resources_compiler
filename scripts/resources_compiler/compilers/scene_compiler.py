@@ -12,6 +12,7 @@ class SceneResourceCompiler(BaseResourceCompiler):
         "mesh_renderer": "MeshRendererComponent",
         "scripts": "ScriptsComponent",
         "camera_2d": "Camera2DComponent",
+        "box_collider": "BoxColliderComponent",
     }
 
     def compile(self, src_path: Path, dst_dir: Path) -> Path:
