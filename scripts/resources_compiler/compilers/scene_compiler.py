@@ -6,9 +6,9 @@ from resources_compiler.core.base_compiler import BaseResourceCompiler
 from resources_compiler.core.flatc import compile_flatbuffer
 
 class SceneResourceCompiler(BaseResourceCompiler):
-    # Entity fields only the editor uses (e.g. its Hierarchy folders). The game never sees them,
-    # and flatc would reject them since scene.fbs doesn't declare them.
-    _editor_only_entity_keys = ("folder",)
+    # Entity fields only the editor uses (its Hierarchy folders, component groups...). The game
+    # never sees them, and flatc would reject them since scene.fbs doesn't declare them.
+    _editor_only_entity_keys = ("folder", "groups", "editor")
 
     _component_types = {
         "transform": "TransformComponent",
@@ -17,6 +17,8 @@ class SceneResourceCompiler(BaseResourceCompiler):
         "scripts": "ScriptsComponent",
         "camera_2d": "Camera2DComponent",
         "box_collider": "BoxColliderComponent",
+        "culling": "CullingComponent",
+        "always_active": "AlwaysActiveComponent",
     }
 
     def compile(self, src_path: Path, dst_dir: Path) -> Path:
