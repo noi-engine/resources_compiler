@@ -6,6 +6,10 @@ from resources_compiler.core.base_compiler import BaseResourceCompiler
 from resources_compiler.core.flatc import compile_flatbuffer
 
 class SceneResourceCompiler(BaseResourceCompiler):
+    # Entity fields only the editor uses (e.g. its Hierarchy folders). The game never sees them,
+    # and flatc would reject them since scene.fbs doesn't declare them.
+    _editor_only_entity_keys = ("folder",)
+
     _component_types = {
         "transform": "TransformComponent",
         "render_layer": "RenderLayerComponent",
@@ -33,6 +37,8 @@ class SceneResourceCompiler(BaseResourceCompiler):
 
     def _preprocess_components(self, scene: dict) -> None:
         for entity in scene.get("entities", []):
+            for key in self._editor_only_entity_keys:
+                entity.pop(key, None)
             entity["components"] = [
                 self._add_properties_type(component)
                 for component in entity.get("components", [])
