@@ -19,6 +19,7 @@ class SceneResourceCompiler(BaseResourceCompiler):
         "box_collider": "BoxColliderComponent",
         "culling": "CullingComponent",
         "always_active": "AlwaysActiveComponent",
+        "fill_screen": "FillScreenComponent",
     }
 
     def compile(self, src_path: Path, dst_dir: Path) -> Path:
