@@ -63,6 +63,11 @@ class ResourcePipeline:
             if not src_file.is_file():
                 continue
 
+            # Hidden files and folders are the editor's own scratch space (undo history, play
+            # snapshots): never part of the game.
+            if any(part.startswith(".") for part in src_file.relative_to(input_root).parts):
+                continue
+
             try:
                 out_path = self.process_file(
                     src_file,
