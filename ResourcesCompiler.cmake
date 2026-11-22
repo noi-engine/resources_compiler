@@ -1,5 +1,12 @@
 find_package(Python3 REQUIRED COMPONENTS Interpreter)
 
+find_program(RESOURCES_COMPILER_FLATC flatc)
+if(NOT RESOURCES_COMPILER_FLATC)
+    message(FATAL_ERROR "[Resource Packer ERROR] flatc (the FlatBuffers compiler) was not found in your PATH. "
+            "Install it to build a release: 'apt install flatbuffers-compiler', 'brew install flatbuffers' "
+            "or 'vcpkg install flatbuffers'.")
+endif()
+
 set(RESOURCES_PACKER_DIR "${CMAKE_CURRENT_LIST_DIR}")
 set(RESOURCES_PACKER_VENV "${CMAKE_BINARY_DIR}/.venv_resources_compiler")
 

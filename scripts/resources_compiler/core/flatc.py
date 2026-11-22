@@ -1,3 +1,4 @@
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -10,6 +11,12 @@ def compile_flatbuffer(schema_name: str, json_path: Path, dst_dir: Path, stem: s
     and renames flatc's `<stem>.bin` output to `<stem><extension>`.
     """
     schema_path = _SCHEMAS_DIR / schema_name
+
+    if shutil.which("flatc") is None:
+        raise RuntimeError(
+            "flatc (the FlatBuffers compiler) was not found in your PATH. Install it to build a release: "
+            "'apt install flatbuffers-compiler', 'brew install flatbuffers' or 'vcpkg install flatbuffers'."
+        )
 
     subprocess.run(
         [
